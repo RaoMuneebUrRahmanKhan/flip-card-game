@@ -229,6 +229,47 @@ h1{
 
 }
 
+.matched .card-inner{
+
+    transform: rotateY(180deg);
+
+}
+
+.matched .card-back{
+
+    background:#22c55e;
+
+    box-shadow:0 0 20px #22c55e;
+
+}
+
+.matched{
+
+    animation: pop .4s ease;
+}
+
+@keyframes pop{
+
+    0%{
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        transform:scale(1.08);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+    }
+
+}
+
 /* Responsive */
 
 @media(max-width:600px){

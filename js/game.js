@@ -3,6 +3,12 @@ const restartBtn = document.getElementById("restartBtn");
 const movesDisplay = document.getElementById("moves");
 const winnerDisplay = document.getElementById("winner");
 const timerDisplay = document.getElementById("timer");
+const scoreDisplay = document.getElementById("score");
+const matchedDisplay = document.getElementById("matched");
+
+let score = 0;
+
+let matchedPairs = 0;
 
 let firstCard = null;
 
@@ -34,6 +40,11 @@ function restartGame() {
   timer = 0;
   gameStarted = false;
 
+  score = 0;
+  matchedPairs = 0;
+
+  scoreDisplay.innerText = "0";
+  matchedDisplay.innerText = "0 / 8";
   movesDisplay.innerText = "0";
   timerDisplay.innerText = "0s";
   winnerDisplay.innerHTML = "";
@@ -129,10 +140,18 @@ function checkMatch() {
 
 function disableCards() {
   firstCard.removeEventListener("click", flipCard);
-
   secondCard.removeEventListener("click", flipCard);
 
+  firstCard.classList.add("matched");
+  secondCard.classList.add("matched");
+
   matchedCards += 2;
+  matchedPairs++;
+
+  score += 10;
+
+  scoreDisplay.innerText = score;
+  matchedDisplay.innerText = `${matchedPairs} / 8`;
 
   checkWin();
 
@@ -145,13 +164,15 @@ function checkWin() {
 
     winnerDisplay.innerHTML = `
 
-        🎉 Congratulations! <br>
+        <h2>🎉 Congratulations!</h2>
 
-        You Won! <br>
+        <p>You matched all cards!</p>
 
-        Moves: ${moves} <br>
+        <p>🏆 Score: ${score}</p>
 
-        Time: ${timer}s
+        <p>🎯 Moves: ${moves}</p>
+
+        <p>⏱ Time: ${timer}s</p>
 
         `;
   }
@@ -164,6 +185,10 @@ function unflipCards() {
     firstCard.classList.remove("flip");
 
     secondCard.classList.remove("flip");
+
+    score = Math.max(0, score - 2);
+
+    scoreDisplay.innerText = score;
 
     resetBoard();
   }, 1000);
